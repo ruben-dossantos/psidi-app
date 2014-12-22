@@ -43,7 +43,7 @@ angular.module('iPhotoApp')
       },
 
       register: function() {
-        alert('registo!');
+        $location.path('/signup');
       }
     };
 
