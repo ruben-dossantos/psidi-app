@@ -1,0 +1,181 @@
+<h2>Prescrições</h2>
+
+<div ng-include src="'views/common/menu.html'"></div>
+
+<div ng-include src="'views/common/notifications.html'"></div>
+
+<div ng-include src="'views/common/errors.html'"></div>
+
+<div ng-include src="'views/common/loading.html'" ng-init="spinner_name = 'spinner'"></div>
+
+<tabset>
+    <tab heading="A Chegar ({{ (in_prescriptions|filter:{'phase':'CE'}).length}})">
+        <br>
+        <div class="row">
+            <label for="search.clinic" class="col-md-1 control-label">Clínica: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.clinic" data-placeholder="Escolha a clínica" id="search.clinic" style="width:100%">
+                    <option value=""></option>
+                    <option ng-repeat="c in clinics" value="{{c.id}}">{{c.name}}</option>
+                </select>
+            </div>
+
+            <label for="search.prescriber" class="col-md-1 control-label">Prescritor: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.prescriber" data-placeholder="Escolha o prescritor" id="search.prescriber" style="width:100%" ng-disabled="!search.clinic" >
+                    <option value=""></option>
+                    <option ng-repeat="u in users" value="{{u.id}}" ng-if="u.clinic.id == search.clinic">{{u.first_name}} {{u.last_name}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr ng-include="'views/common/prescription_headers.html'" ng-init="prescription_type='complex'"> </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in in_prescriptions" ng-if="(search.clinic == undefined || search.clinic == '' || search.clinic == p.prescriber.clinic.id) && (search.prescriber==undefined || search.prescriber=='' || search.prescriber == p.prescriber.id)" ng-include="'views/common/prescription.html'" ng-init="type = 'prescriptions'; prescription_type = 'complex' ;this_phase='CE'"> </tr>
+            <tr ng-show="!in_prescriptions.length" ng-include="'views/common/no_data.html'" ng-init="table_size=8"> </tr>
+            </tbody>
+        </table>
+
+    </tab>
+
+    <tab heading="Ativo ({{ (active_prescriptions|filter:{'phase':'LT'}).length}})">
+        <br>
+        <div class="row">
+            <label for="search.clinic2" class="col-md-1 control-label">Clínica: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.clinic2" data-placeholder="Escolha a clínica" id="search.clinic2" style="width:100%">
+                    <option value=""></option>
+                    <option ng-repeat="c in clinics" value="{{c.id}}">{{c.name}}</option>
+                </select>
+            </div>
+
+            <label for="search.prescriber2" class="col-md-1 control-label">Prescritor: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.prescriber2" data-placeholder="Escolha o prescritor" id="search.prescriber2" style="width:100%" ng-disabled="!search.clinic2" >
+                    <option value=""></option>
+                    <option ng-repeat="u in users" value="{{u.id}}" ng-if="u.clinic.id == search.clinic2">{{u.first_name}} {{u.last_name}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr ng-include="'views/common/prescription_headers.html'" ng-init="prescription_type='complex'"> </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in active_prescriptions" ng-if="(search.clinic2 == undefined || search.clinic2 == '' || search.clinic2 == p.prescriber.clinic.id) && (search.prescriber2 == undefined || search.prescriber2 == '' || search.prescriber2 == p.prescriber.id)" ng-include="'views/common/prescription.html'" ng-init="type = 'prescriptions'; prescription_type = 'complex' ;this_phase='LT'"> </tr>
+            <tr ng-show="!active_prescriptions.length" ng-include="'views/common/no_data.html'" ng-init="table_size=8"> </tr>
+            </tbody>
+        </table>
+
+    </tab>
+
+    <tab heading="Para Saída ({{ (out_prescriptions|filter:{'phase':'LC'}).length}})">
+        <br>
+        <div class="row">
+            <label for="search.clinic3" class="col-md-1 control-label">Clínica: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.clinic3" data-placeholder="Escolha a clínica" id="search.clinic3" style="width:100%">
+                    <option value=""></option>
+                    <option ng-repeat="c in clinics" value="{{c.id}}">{{c.name}}</option>
+                </select>
+            </div>
+
+            <label for="search.prescriber3" class="col-md-1 control-label">Prescritor: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.prescriber3" data-placeholder="Escolha o prescritor" id="search.prescriber3" style="width:100%" ng-disabled="!search.clinic3" >
+                    <option value=""></option>
+                    <option ng-repeat="u in users" value="{{u.id}}" ng-if="u.clinic.id == search.clinic3">{{u.first_name}} {{u.last_name}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr ng-include="'views/common/prescription_headers.html'" ng-init="prescription_type='complex'"> </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in out_prescriptions" ng-if="(search.clinic3 == undefined || search.clinic3 == '' || search.clinic3 == p.prescriber.clinic.id) && (search.prescriber3 == undefined || search.prescriber3=='' || search.prescriber3 == p.prescriber.id)" ng-include="'views/common/prescription.html'" ng-init="type = 'prescriptions'; prescription_type = 'complex' ;this_phase='LC'"> </tr>
+            <tr ng-show="!out_prescriptions.length" ng-include="'views/common/no_data.html'" ng-init="table_size=8"> </tr>
+            </tbody>
+        </table>
+    </tab>
+
+    <tab heading="Pendentes" ng-click="f.pending()">
+        <br>
+        <div class="row">
+            <label for="search.clinic4" class="col-md-1 control-label">Clínica: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.clinic4" data-placeholder="Escolha a clínica" id="search.clinic4" style="width:100%">
+                    <option value=""></option>
+                    <option ng-repeat="c in clinics" value="{{c.id}}">{{c.name}}</option>
+                </select>
+            </div>
+
+            <label for="search.prescriber4" class="col-md-1 control-label">Prescritor: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.prescriber4" data-placeholder="Escolha o prescritor" id="search.prescriber4" style="width:100%" ng-disabled="!search.clinic4" >
+                    <option value=""></option>
+                    <option ng-repeat="u in users" value="{{u.id}}" ng-if="u.clinic.id == search.clinic4">{{u.first_name}} {{u.last_name}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+            <tr ng-include="'views/common/prescription_headers_phase.html'" ng-init="prescription_type='complex'; pending='True'"> </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in pending_prescriptions" ng-if="(search.clinic4 == undefined || search.clinic4 == '' || search.clinic4 == p.prescriber.clinic.id) && (search.prescriber4 == undefined || search.prescriber4 == '' || search.prescriber4 == p.prescriber.id) && (p.phase=='PI' || p.phase=='LE' || p.phase=='CR')" ng-include="'views/common/prescription_phase.html'" ng-init="type = 'prescriptions'; prescription_type = 'complex' ;this_phase='PC'; pending='True'"> </tr>
+            <tr ng-show="!pending_prescriptions.length" ng-include="'views/common/no_data.html'" ng-init="table_size=9"> </tr>
+            </tbody>
+        </table>
+    </tab>
+
+
+    <tab heading="Concluídas" ng-click="f.history()">
+        <br>
+        <div class="row">
+            <label for="search.clinic5" class="col-md-1 control-label">Clínica: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.clinic5" data-placeholder="Escolha a clínica" id="search.clinic5" style="width:100%">
+                    <option value=""></option>
+                    <option ng-repeat="c in clinics" value="{{c.id}}">{{c.name}}</option>
+                </select>
+            </div>
+
+            <label for="search.prescriber5" class="col-md-1 control-label">Prescritor: </label>
+
+            <div class="col-md-5">
+                <select ui-select2="{ allowClear: true}" ng-model="search.prescriber5" data-placeholder="Escolha o prescritor" id="search.prescriber5" style="width:100%" ng-disabled="!search.clinic5" >
+                    <option value=""></option>
+                    <option ng-repeat="u in users" value="{{u.id}}" ng-if="u.clinic.id == search.clinic5">{{u.first_name}} {{u.last_name}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr ng-include="'views/common/prescription_headers.html'" ng-init="prescription_type='complex'"> </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in old_prescriptions" ng-if="(search.clinic5 == undefined || search.clinic5 == '' || search.clinic5 == p.prescriber.clinic.id) && (search.prescriber5 == undefined || search.prescriber5 == '' || search.prescriber5 == p.prescriber.id)" ng-include="'views/common/prescription.html'" ng-init="type = 'prescriptions'; prescription_type = 'complex' ;this_phase='PC'"> </tr>
+            <tr ng-show="!old_prescriptions.length" ng-include="'views/common/no_data.html'" ng-init="table_size=8"> </tr>
+            </tbody>
+        </table>
+    </tab>
+</tabset>

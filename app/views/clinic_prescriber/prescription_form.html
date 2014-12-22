@@ -1,0 +1,346 @@
+
+<div ng-include src="'views/common/menu.html'"></div>
+
+<div ng-include src="'views/common/notifications.html'"></div>
+
+<div ng-include src="'views/common/errors.html'"></div>
+
+<div ng-include src="'views/common/loading.html'" ng-init="spinner_name = 'spinner'"></div>
+
+<form class="form-horizontal" role="form" name="prescription_form">
+<fieldset>
+<legend>Nova Prescrição</legend>
+
+<div class="form-group">
+
+    <div class="col-md-2">Nr: Novo</div>
+    <div class="col-md-2">Data: {{prescription.prescription_date | date:'dd/MM/yyyy'}}</div>
+    <div class="col-md-3">Prescritor: {{prescriber}}</div>
+    <div class="col-md-2">Clínica: {{clinic.name}}</div>
+
+</div>
+
+<div ng-show="patient_info">
+    <div class="form-group">
+        <label for="prescription_patient_name" class="col-md-2 control-label">Paciente: </label>
+
+        <div class="col-md-3" id="div_patient">
+            <input type="text" class="form-control input-sm" id="prescription_patient_name" ng-model="prescription.patient_name" ng-blur="f.evaluate()" autofocus>
+            <div ng-show="prescription_patient_name==true" >
+                <span class="label label-danger danger-span">É necessário o nome do paciente</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="prescription.delivery_date_pretty" class="col-md-2 control-label">
+            Data Entrega:
+        </label>
+        <div class="col-md-3">
+            <div class="dropdown">
+                <a class="dropdown-toggle my-toggle-select" id="prescription.delivery_date_pretty" role="button" data-toggle="dropdown" data-target="#" href="">
+                    <div class="input-append">
+                        <input type="text" class="form-control col-md-8 input-sm" data-ng-model="prescription.delivery_date_pretty" placeholder="Data de entrega...">
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="prescription.delivery_date_pretty">
+                    <datetimepicker data-ng-model="prescription.delivery_date_pretty"
+                                    data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'day' }">
+
+                    </datetimepicker>
+                </ul>
+            </div>
+            <div ng-show="prescription_delivery_date==true" >
+                <span class="label label-danger danger-span-datetimepicker">É necessário informar a data de entrega</span>
+            </div>
+            <div ng-show="prescription_delivery_date_valid==true" >
+                <span class="label label-danger danger-span-datetimepicker">Esta data não pode ser escolhida.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="prescription.objective_phase" class="col-md-2 control-label">
+            Fase-Objetivo:
+        </label>
+        <div class="col-md-3">
+            <select
+                    ui-select2="{ allowClear: true}"
+                    ng-model="prescription.objective_phase"
+                    data-placeholder="Definir a fase objectivo"
+                    id="prescription.objective_phase"
+                    style="width: 100%;">
+                <option value=""></option>
+                <option ng-repeat="o in objective_phases" value="{{o.id}}">{{o.name}}</option>
+            </select>
+            <div ng-show="prescription_objective_phase==true" >
+                <span class="label label-danger danger-span">É necessário informar a fase objectivo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="prescription.urgent" class="col-md-2 control-label">
+            Urgente:
+        </label>
+        <div class="col-md-3">
+            <input type="checkbox" ng-model="prescription.urgent" id="prescription.urgent"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <label for="prescription.comment" class="col-md-2 control-label">Observações Gerais:</label>
+
+        <div class="col-md-10">
+            <textarea class="form-control" id="prescription.comment" rows="3" ng-model="prescription.comment">
+
+            </textarea>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div ng-show="!patient_info">
+<div class="well bs-component" style="padding: 10px 50px 5px 40px;">
+    <legend>Arcada</legend>
+    <div class="form-group" style="padding-left: 15px;">
+        <div class="row">
+            <div class="col-md-2">
+                <p>Superior:</p>
+                <p>Dentes:</p>
+                <p>Cor:</p>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2" ng-repeat="i in superior_small">
+                                <p align="center">{{i}}</p>
+                                <p align="center"><input type="checkbox" ng-model="teeth[i]" /></p>
+                                <p><input type="text" ng-model="colors[i]" maxlength="2" class="form-control input-sm" style="padding: 0; min-width: 25px;"/> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2" ng-repeat="i in superior_middle">
+                                <p align="center">{{i}}</p>
+                                <p align="center"><input type="checkbox" ng-model="teeth[i]" /></p>
+                                <p><input type="text" ng-model="colors[i]" maxlength="2" class="form-control input-sm" style="padding: 0; min-width: 25px;"/> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2" ng-repeat="i in superior_big">
+                                <p align="center">{{i}}</p>
+                                <p align="center"><input type="checkbox" ng-model="teeth[i]" /></p>
+                                <p><input type="text" ng-model="colors[i]" maxlength="2" class="form-control input-sm" style="padding: 0; min-width: 25px;"/> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+
+        <!-- Inferior-->
+
+        <div class="row" style="border-top:1px solid #36414b;">
+            <br>
+            <div class="col-md-2">
+                <p>Inferior:</p>
+                <p>Dentes:</p>
+                <p>Cor:</p>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2" ng-repeat="i in inferior_small">
+                                <p align="center">{{i}}</p>
+                                <p align="center"><input type="checkbox" ng-model="teeth[i]" /></p>
+                                <p><input type="text" ng-model="colors[i]" maxlength="2" class="form-control input-sm" style="padding: 0; min-width: 25px;"/> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2" ng-repeat="i in inferior_middle">
+                                <p align="center">{{i}}</p>
+                                <p align="center"><input type="checkbox" ng-model="teeth[i]" /></p>
+                                <p><input type="text" ng-model="colors[i]" maxlength="2" class="form-control input-sm" style="padding: 0; min-width: 25px;"/> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-2" ng-repeat="i in inferior_big">
+                                <p align="center">{{i}}</p>
+                                <p align="center"><input type="checkbox" ng-model="teeth[i]" /></p>
+                                <p><input type="text" ng-model="colors[i]" maxlength="2" class="form-control input-sm" style="padding: 0; min-width: 25px;"/> </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="well bs-component" style="padding-bottom: 5px; padding-top: 10px;">
+    <legend>Artigos</legend>
+
+    <div class="form-group" style="padding-left: 25px; padding-right: 25px;">
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <thead>
+                <th>Código</th>
+                <th>Descrição</th>
+                <th width="5%">Quantidade</th>
+                <th>Observações</th>
+                <th width="5%"><a href="" tooltip="Impressão Superior">IS</a></th>
+                <th width="5%"><a href="" tooltip="Impressão Inferior">II</a></th>
+                <th width="5%"><a href="" tooltip="Registo de Mordida">RM</a></th>
+                <th width="5%">Côr</th>
+                <th width="5%">Apagar</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="p in selected_products">
+                    <td>{{p.code}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.quantity}}</td>
+                    <td>{{p.comment}}</td>
+                    <td>{{ p.upper | productDetails }}</td>
+                    <td>{{ p.lower | productDetails }}</td>
+                    <td>{{ p.bite | productDetails }}</td>
+                    <td>{{ p.color | productDetails }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" ng-click="f.delete_product(p)" tooltip="Remover artigo">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="well bs-component" style="background-color: #36414b; padding-top: 5px; padding-bottom: 5px;">
+
+        <legend>Novo</legend>
+
+        <div class="row">
+
+            <div class="col-md-8" style="border-right: 1px solid #252d34;">
+                <div class="form-group" id="div_product_name">
+                    <label for="description" class="col-md-2 control-label">Descrição: </label>
+
+                    <div class="col-md-6">
+                        <select
+                                ui-select2="{ allowClear: true}"
+                                ng-model="product.id"
+                                data-placeholder="Escolher um artigo"
+                                id="description"
+                                style="width: 100%;">
+                            <option value=""></option>
+                            <option ng-repeat="p in products" value="{{p.id}}">{{p.code}} - {{p.name}}</option>
+                        </select>
+                        <div ng-show="product_code==true" >
+                            <span class="label label-danger danger-span">Escolha um artigo</span>
+                        </div>
+                    </div>
+
+                    <label for="product.quantity" class="col-md-2 control-label">Quantidade: </label>
+
+                    <div class="col-md-2">
+                        <input type="text" class="form-control input-sm" id="product.quantity" ng-model="product.quantity" autocomplete="off" maxlength="2">
+
+                        <div ng-show="product_quantity==true">
+                            <span class="label label-danger danger-span">Escolha uma quantidade</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product.comment" class="col-md-2 control-label">Observações: </label>
+
+                    <div class="col-md-10">
+                        <textarea class="form-control" id="product.comment" rows="2" ng-model="product.comment">
+
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+
+                    <label for="product.upper" class="col-md-4 control-label no-padding-top">Impressão Superior: </label>
+
+                    <div class="col-md-2">
+                        <input type="checkbox" id="product.upper" ng-model="product.upper" ng-disabled="productx.upper!=undefined">
+                    </div>
+
+                    <label for="product.lower" class="col-md-4 control-label no-padding-top">Impressão Inferior: </label>
+
+                    <div class="col-md-2">
+                        <input type="checkbox" id="product.lower" ng-model="product.lower" ng-disabled="productx.lower!=undefined">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="product.bite" class="col-md-4 control-label no-padding-top">Registo de Mordida: </label>
+                    <div class="col-md-2">
+                        <input type="checkbox" id="product.bite" ng-model="product.bite" ng-disabled="productx.bite!=undefined">
+                    </div>
+
+                    <label for="product.color" class="col-md-4 control-label no-padding-top">Côr: </label>
+                    <div class="col-md-2">
+                        <input type="checkbox" id="product.color" ng-model="product.color" ng-disabled="productx.color!=undefined">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-md-12" style="text-align: right;">
+                <button type="submit" class="btn btn-primary" ng-click="f.add_product()">Adicionar</button>
+                <button class="btn btn-default">Limpar</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12" style="text-align: right;">
+        <br>
+        <button class="btn btn-default" ng-click="f.go_back()">Cancelar</button>
+        <button type="submit" class="btn btn-info" ng-click="f.next(!patient_info)">{{btn_state}}</button>
+        <button ng-show="last_page" type="submit" class="btn btn-primary" ng-click="f.submit()">Submeter</button>
+
+    </div>
+</div>
+
+
+</fieldset>
+</form>

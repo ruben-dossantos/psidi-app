@@ -1,0 +1,20 @@
+<h2>Prescrições</h2>
+
+<div ng-include src="'views/common/menu.html'"></div>
+
+<div ng-include src="'views/common/notifications.html'"></div>
+
+<div ng-include src="'views/common/errors.html'"></div>
+
+<div ng-include src="'views/common/loading.html'" ng-init="spinner_name = 'spinner'"></div>
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr ng-include="'views/common/prescription_headers.html'" ng-init="pending='True'"> </tr>
+    </thead>
+    <tbody>
+    <tr ng-show="!old" ng-repeat="p in prescriptions" ng-if="p.phase != 'PC'" ng-include="'views/common/prescription.html'" ng-init="pending='True'; type='prescriptions'"> </tr>
+    <tr ng-show="old" ng-repeat="p in prescriptions" ng-include="'views/common/prescription.html'" ng-init="type='prescriptions'"> </tr>
+    <tr ng-show="!prescriptions.length" ng-include="'views/common/no_data.html'" ng-init="table_size=5"> </tr>
+    </tbody>
+</table>

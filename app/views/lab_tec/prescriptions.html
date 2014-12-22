@@ -1,0 +1,33 @@
+<h2>Prescrições</h2>
+
+<div ng-include src="'views/common/menu.html'"></div>
+
+<div ng-include src="'views/common/notifications.html'"></div>
+
+<div ng-include src="'views/common/errors.html'"></div>
+
+<div ng-include src="'views/common/loading.html'" ng-init="spinner_name = 'spinner'"></div>
+
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Paciente</th>
+        <th>Data Entrega</th>
+        <th width="10%">Nrº de Obra</th>
+        <th width="25%"><p align="right">Completo</p></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in prescriptions">
+        <td>{{p.id}}</td>
+        <td>{{p.patient_name}}</td>
+        <td>{{p.delivery_date | date:'dd/MM/yyyy'}}</td>
+        <td>{{p.external_code}}</td>
+        <td align="right">
+            <div ng-include src="'views/common/buttons.html'" ng-init="this_phase='LT'; type='prescriptions'"></div>
+        </td>
+    </tr>
+    <tr ng-show="!prescriptions.length" ng-include src="'views/common/no_data.html'" ng-init="table_size=5"> </tr>
+    </tbody>
+</table>
