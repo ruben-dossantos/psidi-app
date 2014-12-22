@@ -19,10 +19,14 @@ angular.module('iPhotoApp')
                 return url_prefix;
             },
             getUser: function(){
+              try {
                 var user = $cookieStore.get('labprot-user');
                 user.user_type = user_types[user.user_type];
                 user.name = user.first_name + ' ' + user.last_name;
                 return user;
+              } catch(e){
+                console.log('user not found!');
+              }
             },
             getUserTypeMap: function(){
                 return user_types;
