@@ -4,23 +4,17 @@ var constants = {
     //'serverAddress': '.../',
     'serverAddress': 'http://localhost\\:8000/api/',
     'resources': {
-        'Laboratory': {
-            'endpoint': 'laboratories'
+        'Album': {
+            'endpoint': 'albums'
         },
-        'Clinic': {
-            'endpoint': 'clinics'
+        'Order': {
+            'endpoint': 'orders'
         },
         'User': {
             'endpoint': 'users'
         },
-        'Prescription': {
-            'endpoint': 'prescriptions'
-        },
-        'PrescriptionLog': {
-            'endpoint': 'prescription_logs'
-        },
-        'Product': {
-            'endpoint': 'products'
+        'PrintAlbum': {
+            'endpoint': 'printAlbum'
         }
     }
 };
