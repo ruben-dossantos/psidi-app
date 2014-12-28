@@ -35,21 +35,20 @@
 
         <accordion close-others="oneAtATime">
           <accordion-group ng-repeat="p in print_albums" heading="{{p.title}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-            {{p}}
-          </accordion-group>
-          <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
-            {{group.content}}
-          </accordion-group>
-          <accordion-group heading="Dynamic Body Content">
-            <p>The body of the accordion group grows to fit the contents</p>
-            <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-            <div ng-repeat="item in items">{{item}}</div>
-          </accordion-group>
-          <accordion-group is-open="status.open">
-            <accordion-heading>
-              I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-            </accordion-heading>
-            This is just some content to illustrate fancy headings.
+
+            <table class="table table-hover" width="100%" cellpadding="3" cellspacing="3">
+              <tr ng-repeat="tr in p.tr">
+                <td ng-repeat="td in tr">
+                  <div class="checkbox">
+                  <img ng-src="{{td.photo}}" width="250px" height="250px">
+                    <label>
+                  <input type="checkbox" ng-model="print_album.photos[td.id]" id="prescription.urgent"/>
+                      </label>
+                    </div>
+                </td>
+              </tr>
+            </table>
+
           </accordion-group>
         </accordion>
       </div>
