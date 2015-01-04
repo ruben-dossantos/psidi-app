@@ -10,7 +10,8 @@ angular
         'iPhotoApp.services',
         'ui.bootstrap',
         'ui.select2',
-        'ui.bootstrap.datetimepicker'
+        'ui.bootstrap.datetimepicker',
+        'iPhotoApp.ServiceAlbum'
     ])
     .config(function ($routeProvider) {
         $routeProvider

@@ -2,11 +2,11 @@
 
 var constants = {
     //'serverAddress': '.../',
-    'serverAddress': 'http://localhost\\:8000/api/',
+    'serverAddress': 'http://localhost\\:8000/',
     'resources': {
-        'Album': {
-            'endpoint': 'albums'
-        },
+        //'Album': {
+        //    'endpoint': 'albums'
+        //},
         'Order': {
             'endpoint': 'orders'
         },
@@ -30,9 +30,11 @@ for (var resource in resourceObjects) {
 }
 
 function addResourceFactoryToService(service, resource, resourceEndPoint){
-    service.factory(resource, function ($resource, $http, $cookieStore) {
+    service.factory(resource, function ($resource, $http, $cookieStore, Iphotoshare) {
 
         $http.defaults.headers.common['Authorization'] = 'Token ' + $cookieStore.get('djangotoken');
+
+      console.log("cenas ->", Iphotoshare.getUser());
 
         return $resource(
                 constants.serverAddress + resourceEndPoint + '/:id',

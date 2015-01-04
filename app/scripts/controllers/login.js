@@ -5,42 +5,40 @@ angular.module('iPhotoApp')
     $routeProvider
       .when('/login', { templateUrl: 'views/login.html', controller: 'LoginCtrl' })
   })
-  .controller('LoginCtrl', function ($scope, $http, $location, $cookieStore, Labprotshare) {
-
-    $scope.user_type = Labprotshare.getUserTypeMap();
+  .controller('LoginCtrl', function ($scope, $http, $location, $cookieStore, Iphotoshare) {
 
     $scope.f = {
-      login: function () {
-        $http.post(Labprotshare.getUrl_Prefix() + '/api-token-auth/', $scope.user_data)
-          .success($scope.f.login_success)
-          .error($scope.f.login_error);
-      },
+      //login: function () {
+      //  $http.post(Iphotoshare.getUrl_Prefix() + '/api-token-auth/', $scope.user_data)
+      //    .success($scope.f.login_success)
+      //    .error($scope.f.login_error);
+      //},
 
-      login_success: function(response) {
-        $cookieStore.put('djangotoken', response.token);
-        $http.defaults.headers.common['Authorization'] = 'Token ' + response.token;
+      login: function() {
+        //$cookieStore.put('djangotoken', response.token);
+        //$http.defaults.headers.common['Authorization'] = 'Token ' + response.token;
 
-        $http.get(Labprotshare.getUrl_Prefix() + '/api/users/' + $scope.user_data.username)
+        $http.post(Iphotoshare.getUrl_Prefix() + '/login', $scope.user_data)
           .success(function(data, status){
-            $cookieStore.put('labprot-user', data);
+            //$cookieStore.put('iphoto-user', data);
+            Iphotoshare.setUser(data);
             try{
-              $location.path('/' + $scope.user_type[data.user_type]);
+              $location.path('/user');
             }   catch(error) {
-              $location.path('/');
+              $location.path('/signup');
             }
           })
-          .error(function(data, status){
-            $cookieStore.remove('djangotoken');
-            console.log('error getting things')
+          .error(function(error, status){
+            console.log('error getting things ->', error);
           });
       },
 
-      login_error: function(r){
-        var notifications = { 'error': r.non_field_errors[0]};
-        $cookieStore.put('labprot-notifications', notifications);
-        $location.path('/login');
-        $scope.user_data = {};
-      },
+      //login_error: function(r){
+      //  var notifications = { 'error': r.non_field_errors[0]};
+      //  $cookieStore.put('labprot-notifications', notifications);
+      //  $location.path('/login');
+      //  $scope.user_data = {};
+      //},
 
       register: function() {
         $location.path('/signup');
