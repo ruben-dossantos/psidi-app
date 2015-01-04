@@ -13,9 +13,9 @@ angular.module('iPhotoApp')
       .when('/orders', {templateUrl: 'views/user/orders.html', controller: 'UserOrdersCtrl' })
       .when('/user/:id/order', {redirectTo: '/orders'})
   })
-  .controller('UserOrdersCtrl', function ($scope, $location, Order) {
+  .controller('UserOrdersCtrl', function ($scope, $location, $controller, Order) {
 
-    console.log('UserAlbumsCtrl');
+    angular.extend(this, $controller('CommonFunctionsCtrl', {$scope: $scope}));
 
     var search = $location.search();
 

@@ -4,9 +4,9 @@ var constants = {
     //'serverAddress': '.../',
     'serverAddress': 'http://localhost\\:8000/',
     'resources': {
-        //'Album': {
-        //    'endpoint': 'albums'
-        //},
+        'Album': {
+            'endpoint': 'albums'
+        },
         'Order': {
             'endpoint': 'orders'
         },

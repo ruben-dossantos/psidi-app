@@ -13,21 +13,23 @@
   <tr>
     <th>#</th>
     <th>Title</th>
+    <th>Description</th>
     <th>Start Date</th>
     <th>End Date</th>
     <th width="10%">Options</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="object in laboratories">
-    <td>{{object.id}}</td>
-    <td><a ng-href="#/admin/users?laboratory={{object.id}}">{{object.name}}</a></td>
-    <td>{{object.city}}</td>
-    <td>{{object.email}}</td>
+  <tr ng-repeat="object in albums">
+    <td>{{object.albumID}}</td>
+    <td>{{object.title}}</td>
+    <td>{{object.description}}</td>
+    <td>{{object.start_date | date:'dd/MM/yyyy' }}</td>
+    <td>{{object.end_date | date:'dd/MM/yyyy' }}</td>
     <td>
-      <div ng-include src="'views/common/buttons.html'" ng-init="type = 'laboratory'"></div>
+      <div ng-include src="'views/common/buttons.html'" ng-init="type = 'album'"></div>
     </td>
   </tr>
-  <tr ng-show="!laboratories.length" ng-include src="'views/common/no_data.html'" ng-init="table_size=5"></tr>
+  <tr ng-show="!albums.length" ng-include src="'views/common/no_data.html'" ng-init="table_size=6"></tr>
   </tbody>
 </table>

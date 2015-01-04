@@ -12,10 +12,11 @@ angular.module('iPhotoApp')
     $routeProvider
       .when('/user/:id/order/create', {templateUrl: 'views/user/order_form.html', controller: 'UserOrderCtrl' })
   })
-  .controller('UserOrderCtrl', function ($scope) {
+  .controller('UserOrderCtrl', function ($scope, $controller) {
+
+    angular.extend(this, $controller('CommonFunctionsCtrl', {$scope: $scope}));
 
     $scope.order = {};
-
 
     $scope.print_albums = [
       {
@@ -72,9 +73,6 @@ angular.module('iPhotoApp')
         "photos": []
       }
     ];
-
-
-    console.log('UserOrderCtrl');
 
     $scope.f = {
       submit: function(){

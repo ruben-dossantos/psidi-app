@@ -1,14 +1,14 @@
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a ng-href="#/" class="navbar-brand">iPhoto</a>
+      <a ng-href="#/user" class="navbar-brand">iPhoto</a>
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li class="divider-vertical"></li>
         <!--left-->
         <li class>
-          <a ng-href="#user/1/album/create">New Album</a>
+          <a ng-href="#user/{{user.userID}}/album/create">New Album</a>
         </li>
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown">Orders<b class="caret"></b></a>

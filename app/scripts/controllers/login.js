@@ -17,9 +17,10 @@ angular.module('iPhotoApp')
       login: function() {
         //$cookieStore.put('djangotoken', response.token);
         //$http.defaults.headers.common['Authorization'] = 'Token ' + response.token;
-
+        $scope.spinner = true;
         $http.post(Iphotoshare.getUrl_Prefix() + '/login', $scope.user_data)
           .success(function(data, status){
+            $scope.spinner = false;
             //$cookieStore.put('iphoto-user', data);
             Iphotoshare.setUser(data);
             try{
@@ -27,9 +28,11 @@ angular.module('iPhotoApp')
             }   catch(error) {
               $location.path('/signup');
             }
+
           })
           .error(function(error, status){
             console.log('error getting things ->', error);
+            $scope.spinner = false;
           });
       },
 

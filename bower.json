@@ -19,6 +19,7 @@
     "angular-bootstrap-datetimepicker": "0.2.2",
     "bootswatch": "latest",
     "spin.js": "~2.0.1",
+    "angular-file-upload": "latest",
     "angular-spinner": "~0.5.0"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
   },
   "resolutions": {
     "bootstrap": "~3.3.1",
-    "angular": "1.2.15"
+    "angular": "1.2.15",
+    "es5-shim": ">=3.4.0"
   }
 }

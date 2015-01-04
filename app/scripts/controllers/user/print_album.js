@@ -12,7 +12,9 @@ angular.module('iPhotoApp')
     $routeProvider
       .when('/user/:id/print_album/create', {templateUrl: 'views/user/print_album_form.html', controller: 'UserPrintAlbumCtrl' })
   })
-  .controller('UserPrintAlbumCtrl', function ($scope) {
+  .controller('UserPrintAlbumCtrl', function ($scope, $controller) {
+
+    angular.extend(this, $controller('CommonFunctionsCtrl', {$scope: $scope}));
 
     $scope.print_album = {};
     $scope.print_album.photos = [];
@@ -76,16 +78,10 @@ angular.module('iPhotoApp')
               j++;
             }
             $scope.print_albums[i].tr.push(td);
-            console.log("j = ", j);
-            console.log($scope.print_albums[i].photos.length);
           }
-          console.log("i = ", i);
         }
 
-        console.log($scope.print_albums);
-
       },
-
       submit: function(){
         console.log($scope.print_album);
       }

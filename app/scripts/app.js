@@ -11,7 +11,7 @@ angular
         'ui.bootstrap',
         'ui.select2',
         'ui.bootstrap.datetimepicker',
-        'iPhotoApp.ServiceAlbum'
+        'angularFileUpload'
     ])
     .config(function ($routeProvider) {
         $routeProvider

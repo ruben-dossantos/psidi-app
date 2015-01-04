@@ -5,7 +5,7 @@ angular.module('iPhotoApp')
     $routeProvider
       .when('/signup', { templateUrl: 'views/register.html', controller: 'RegisterCtrl' })
   })
-  .controller('RegisterCtrl', function ($scope, $http, Iphotoshare) {
+  .controller('RegisterCtrl', function ($scope, $http, $location, Iphotoshare) {
 
     $scope.user_data = {};
 
@@ -15,22 +15,21 @@ angular.module('iPhotoApp')
 
     $scope.f = {
       submit: function(){
-        $http.post(Iphotoshare.getUrl_Prefix() + '/signup', $scope.user_data
-          //,{
-          //  transformRequest: angular.identity,
-          //  headers: {
-          //    'Content-Type' : 'application/json',
-          //    'Access-Control-Allow-Origin': '*'
-          //  }
-          //}
-        )
-          .success(function(data){
-            console.log("user created", data);
-          })
-          .error(function(error){
-            console.log("error creating user", error);
+        if($scope.user_data.password != $scope.user_data.confirm_password){
 
-          });
+        } else {
+          $scope.spinner = true;
+          $http.post(Iphotoshare.getUrl_Prefix() + '/signup', $scope.user_data)
+            .success(function(data){
+              console.log("user created", data);
+              $location.path('/login');
+              $scope.spinner = false;
+            })
+            .error(function(error){
+              console.log("error creating user", error);
+              $scope.spinner = false;
+            });
+        }
       }
     }
   });
